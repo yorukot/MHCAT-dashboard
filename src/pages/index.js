@@ -1,15 +1,18 @@
 import { Col, Avatar, Card, Text, Button, Row } from "@nextui-org/react";
 import * as React from "react";
-import { experimentalStyled as styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
 import { GetUserGuilds } from "../util/fetchapi/GetUserGuilds";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Skeleton from '@mui/material/Skeleton';
+import { Loading } from "@nextui-org/react";
 
 export default function Home() {
+  const router = useRouter();
+
   const { data: session } = useSession();
   const [guilds, setGuilds] = useState([]);
 
@@ -22,12 +25,12 @@ export default function Home() {
       fetchData();
     }
   }, [session]);
+
   console.log(guilds);
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={2.5} columns={{ xs: 2, sm: 6, md: 12, lg: 16 }}>
-        {guilds.map((guild) => (
-          <Grid key={guild.id} xs={2} sm={3} md={4} lg={4}>
+      {guilds.length > 0 ?       <Grid container spacing={2.5} columns={{ xs: 2, sm: 6, md: 12, lg: 16 }}>{guilds.map((guild) => (
+          <Grid key={guild.id} onClick={() => router.push(`/guilds/${guild.id}`)} xs={2} sm={3} md={4} lg={4} >
             <Card
               isPressable
               isHoverable
@@ -71,7 +74,7 @@ export default function Home() {
                     ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`
                     : null
                 }
-              />
+              ></Avatar>
               <Typography
                 sx={{
                   position: "absolute",
@@ -90,8 +93,18 @@ export default function Home() {
               </Typography>
             </Card>
           </Grid>
-        ))}
-      </Grid>
+        ))}</Grid> : (
+          <Grid
+      container
+      justifyContent="center"
+      alignItems="center"
+      style={{ height: '100vh' }}
+    >
+        <Loading size="xl" />
+        </Grid>
+        )
+      }
+        
     </Box>
   );
 }

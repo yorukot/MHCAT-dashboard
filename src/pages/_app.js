@@ -10,18 +10,10 @@ export default function App({
 }) {
   const router = useRouter();
 
-  if (router.pathname.startsWith("/signin")) {
-    return (
-      <SessionProvider session={session}>
-        <Component {...pageProps}></Component>
-      </SessionProvider>
-    );
-  }
-
   return (
     <SessionProvider session={session}>
       <AppHeaderBar>
-        <Component {...pageProps} />
+        <Component {...pageProps}></Component>
       </AppHeaderBar>
     </SessionProvider>
   );

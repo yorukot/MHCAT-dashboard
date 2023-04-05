@@ -28,41 +28,7 @@ export default function AppHeaderBar({ children }) {
   const handleClose = () => {
     setSnackBarState(open ? false : true);
   };
-  if (status !== "authenticated") {
-    return (
-      <div
-        style={{
-          height: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Box
-          component="span"
-          sx={{
-            p: 2,
-            border: "1px solid grey",
-            backgroundColor: "#2b2b2b",
-            borderRadius: "20px",
-          }}
-        >
-          <Button
-            variant="contained"
-            color="success"
-            onClick={() => signIn("discord")}
-            sx={{
-              backgroundColor: "#5765f2",
-              "&:hover": { backgroundColor: "#3a43a1" },
-            }}
-            startIcon={<BsDiscord />}
-          >
-            使用Discord登入
-          </Button>
-        </Box>
-      </div>
-    );
-  } else {
+  if (status === "authenticated") {
     return (
       <Box sx={{ display: "flex", marginTop: "64px" }}>
         <CssBaseline />
@@ -143,6 +109,40 @@ export default function AppHeaderBar({ children }) {
           {children}
         </Box>
       </Box>
+    );
+  }else{
+    return (
+      <div
+        style={{
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Box
+          component="span"
+          sx={{
+            p: 2,
+            border: "1px solid grey",
+            backgroundColor: "#2b2b2b",
+            borderRadius: "20px",
+          }}
+        >
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => signIn("discord")}
+            sx={{
+              backgroundColor: "#5765f2",
+              "&:hover": { backgroundColor: "#3a43a1" },
+            }}
+            startIcon={<BsDiscord />}
+          >
+            使用Discord登入
+          </Button>
+        </Box>
+      </div>
     );
   }
 }
