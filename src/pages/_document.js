@@ -7,7 +7,6 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <title>MHCAT</title>
         <link
           rel="shortcut icon"
           href="https://cdn.discordapp.com/attachments/991337796960784424/1093112059891286086/favicon.ico"

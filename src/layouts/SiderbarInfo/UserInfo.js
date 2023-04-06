@@ -34,11 +34,9 @@ export default function UserInfo() {
 
       <Box sx={{ marginTop: "16px" }}>
         <Popover isBordered disableShadow>
-
-
           <Popover.Trigger>
             <Card isHoverable css={{ p: "$6", w: "240px" }}>
-              <Card.Header>
+              {session ? (<Card.Header>
                 <Avatar src={session.user?.image}>
                 {session.user.name}
                 </Avatar>
@@ -52,7 +50,8 @@ export default function UserInfo() {
                     <Text css={{ color: "$accents8" }}>#{session.discriminator}</Text>
                   </Grid>
                 </Grid.Container>
-              </Card.Header>
+              </Card.Header>) : <></>}
+              
             </Card>
           </Popover.Trigger>
 
