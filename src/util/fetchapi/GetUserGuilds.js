@@ -3,9 +3,8 @@ import axios from "axios";
 //import mongoose from "mongoose";
 //import connect from './connectMongodb'
 
-export async function GetUserGuilds(GiveaccessToken,userId) {
+export async function GetUserGuilds(userId) {
   const requestBody = {
-    'GiveAccessToken': GiveaccessToken,
     'userid': userId
   };
   const response = await fetch("http://localhost:3000/api/discord/getusreguilds", {

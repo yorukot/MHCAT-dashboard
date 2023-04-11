@@ -30,24 +30,16 @@ export default function SiderBarList() {
       {router.query.id ? (
         <>
           <List>
+          <Link href={`/guilds/${router.query.id}/welcome`}>
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
                   <BsFillCaretDownFill />
                 </ListItemIcon>
-                <ListItemText primary="請選擇一個伺服器" />
+                <ListItemText primary="歡迎系統" />
               </ListItemButton>
             </ListItem>
-          </List>
-          <List>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <BsFillCaretDownFill />
-                </ListItemIcon>
-                <ListItemText primary="請選擇一個伺服器" />
-              </ListItemButton>
-            </ListItem>
+            </Link>
           </List>
           <Divider />
         </>

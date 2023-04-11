@@ -1,8 +1,13 @@
-export async function GetUserGuilds(userId) {
+//import { guilds } from "./schemas";
+//import mongoose from "mongoose";
+//import connect from './connectMongodb'
+
+export async function GetGuild(userId, guildId) {
   const requestBody = {
-    'GuildId': userId
+    'userid': userId,
+    'GuildId': guildId
   };
-  const response = await fetch("http://localhost:3000/api/discord/getusreguilds", {
+  const response = await fetch("http://localhost:3000/api/discord/getguild", {
     method: "POST",
     body: JSON.stringify(requestBody),
     headers: {

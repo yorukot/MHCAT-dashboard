@@ -18,6 +18,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import Avatar from "@mui/material/Avatar";
 import Link from "@mui/material/Link";
 import LightModeIcon from "@mui/icons-material/LightMode";
+import { User } from "@nextui-org/react";
 import {
   Modal,
   Input,
@@ -44,24 +45,24 @@ export default function AppHeaderBar({ children }) {
     <Box sx={{ display: "flex", marginTop: "64px" }}>
       <Modal blur preventClose aria-labelledby="modal-title" open={auth}>
         <Modal.Header css={{ alignContent: "center", justifyItems: "center" }}>
-        <Avatar src="https://media.discordapp.net/attachments/991337796960784424/1076133775026700309/fotor_2023-2-17_21_31_7.png?width=160&height=160" 
-          >
-          </Avatar>
+          <Avatar src="https://media.discordapp.net/attachments/991337796960784424/1076133775026700309/fotor_2023-2-17_21_31_7.png?width=160&height=160"></Avatar>
         </Modal.Header>
 
         <Modal.Body css={{ textAlign: "center" }}>
-
           <Text id="modal-title" size={18}>
             請選取一個登入方式
           </Text>
         </Modal.Body>
-        <Modal.Footer >
-            <Button onClick={() => signIn('discord')} color="primary" auto icon={<BsDiscord />} css={
-              {width: '100%',
-              backgroundColor: '#5765f2'}
-            }>
-              使用Discord登入
-            </Button>
+        <Modal.Footer>
+          <Button
+            onClick={() => signIn("discord")}
+            color="primary"
+            auto
+            icon={<BsDiscord />}
+            css={{ width: "100%", backgroundColor: "#5765f2" }}
+          >
+            使用Discord登入
+          </Button>
         </Modal.Footer>
       </Modal>
       <CssBaseline />
@@ -72,8 +73,10 @@ export default function AppHeaderBar({ children }) {
         <Toolbar sx={{ display: "flex" }}>
           <Link href="/" underline="none">
             <Avatar
+              sx={{ width: 30, height: 30 }}
+              variant="square"
               href="/"
-              src="https://media.discordapp.net/attachments/991337796960784424/1076133775026700309/fotor_2023-2-17_21_31_7.png?width=160&height=160"
+              src="https://media.discordapp.net/attachments/991337796960784424/994808276137025637/magicut_1656773580167.png"
             ></Avatar>
           </Link>
 
