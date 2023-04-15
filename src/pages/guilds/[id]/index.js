@@ -17,7 +17,8 @@ import { AiFillHome } from "react-icons/ai";
 import { getSession } from "next-auth/react";
 import { GetGuild } from "../../../util/fetchapi/GetGuild";
 import { BsFillDoorOpenFill } from "react-icons/bs";
-
+import GetRedisUserGuilds from "../../../util/redis/GetRedisUserGuilds";
+import GetRedisGuild from "../../../util/redis/GetRedisGuild";
 const PathData = [
   {
     id: "welcome",
@@ -36,7 +37,7 @@ const PathData = [
     name: "抽獎",
     icon: <BsFillDoorOpenFill />,
     Des: "讓你的伺服器有一些有趣的東西讓使用者可以玩玩",
-  }
+  },
 ];
 
 export default function GuildsPage(data) {
@@ -190,7 +191,7 @@ export async function getServerSideProps(ctx) {
         status: "401",
       },
     };
-  const guildsData = await GetUserGuilds(session.id);
+  const guildsData = await GetRedisUserGuilds(session.id);
   const isFound = guildsData.some((element) => {
     if (element.id === query.id) {
       return true;
@@ -198,7 +199,7 @@ export async function getServerSideProps(ctx) {
     return false;
   });
   if (isFound) {
-    const GuildData = await GetGuild(session.id, query.id);
+    const GuildData = await GetRedisGuild(session.id, query.id);
     return {
       props: {
         status: `${GuildData.status === "404" ? "404" : "200"}`,

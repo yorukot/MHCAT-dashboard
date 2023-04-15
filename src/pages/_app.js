@@ -34,7 +34,7 @@ const darkTheme = createMuiTheme({
     text: {
       primary: "#d0d0d0",
     },
-    divider: "#979797",
+    divider: "#3b3b3b",
   },
 });
 

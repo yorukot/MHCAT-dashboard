@@ -15,7 +15,7 @@ export default function Home(Guildsdata) {
   const guilds = Guildsdata.guilds;
   return (
     <Box sx={{ flexGrow: 1 }}>
-      {guilds.length > 0 ? (
+      {guilds?.length > 0 ? (
         <Grid
           container
           spacing={2.5}

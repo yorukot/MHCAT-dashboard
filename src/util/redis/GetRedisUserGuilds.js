@@ -11,13 +11,12 @@ async function GetRedisUserGuilds(sessionId) {
       return rawdata;
     })) ||
     (await GetUserGuilds(sessionId).then((GuildsData) => {
-      console.log(GuildsData);
       if (["403", "500"].includes(GuildsData?.status)) return;
       redis.set(
         `API/GuildsData/${sessionId}`,
         JSON.stringify(GuildsData),
         "EX",
-        60 * 1 * 1000,
+        60 * 2 * 1000,
         (err) => {
           if (err) {
             console.log(err);

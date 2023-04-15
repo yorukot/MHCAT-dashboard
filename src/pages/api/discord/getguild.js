@@ -20,35 +20,11 @@ export default async function getGuild(req, res) {
     const { accessToken } = await userdata.findOne({ id: userid });
     //如果沒有accessToken則返回403error
     if (!accessToken) return res.json({ status: "403" });
-    //嘗試尋找伺服器
-    const Guild = await guildData.findOne({ id: GuildId });
-    //如果沒有找到
-    if (!Guild) {
-      //取得伺服器資料
-      const GuildData = await getGuildService(GuildId);
-      //創建新資料
-      const newGuildGuilds = new guildData(GuildData);
-      //儲存資料
-      await newGuildGuilds.save();
-      //返回資料
-      return res.json({ status: "200", GuildData: GuildData });
-      //如果上次更新時間過久
-    } else if (Date.now() - Guild.updatetime > 1800000) {
       //找尋資料
       const GuildData = await getGuildService(GuildId);
-      //取得資料並更新
-      const newUserGuilds = await guildData.findOneAndUpdate(
-        { id: GuildId },
-        GuildData,
-        { new: true }
-      );
       //返回資料
       return res.json({ status: "200", GuildData: GuildData });
       //如果已經有資料了
-    } else {
-      //返回資料
-      return res.json({ status: "200", GuildData: Guild });
-    }
   } catch (error) {
     //console.log錯誤
     console.log(error);

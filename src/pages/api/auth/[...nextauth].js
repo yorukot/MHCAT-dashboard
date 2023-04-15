@@ -27,6 +27,7 @@ export default NextAuth({
       session.discriminator = token.discriminator;
       //讓session.id等於jwt回傳的使用者id
       session.id = token.id;
+      session.accessToken = token.accessToken;
       //回傳session
       return session;
     },
@@ -51,6 +52,7 @@ export default NextAuth({
         //讓返回的資料有使用者的tag，好方便session取得資料
         token.discriminator = profile.discriminator;
         token.id = profile.id;
+        token.accessToken = account.access_token;
       }
       //返回token(帶有profile id)
       return token;

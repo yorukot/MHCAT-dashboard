@@ -37,7 +37,6 @@ export default function SideBar() {
       >
         <Toolbar />
         <Box sx={{ overflow: "auto" }}>
-          <Divider />
         </Box>
         
         <SiderbarInfo />

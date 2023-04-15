@@ -102,6 +102,8 @@ export default function AppHeaderBar({ children }) {
                 onClick={handleClose}
                 sx={{
                   textAlign: "right",
+                  width: '40px',
+                  height: '40px',
                   display: { xs: "block", lg: "none" },
                 }}
               >
@@ -128,7 +130,6 @@ export default function AppHeaderBar({ children }) {
       >
         <Toolbar />
         <Box sx={{ overflow: "auto" }}>
-          <Divider />
         </Box>
 
         <SiderbarInfo />
