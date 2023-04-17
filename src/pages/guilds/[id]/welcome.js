@@ -508,7 +508,7 @@ export async function getServerSideProps(ctx) {
       return true;
     }
     return false;
-  });
+  }); 
   if (isFound) {
     const GuildData = await GetRedisGuild(session.id, query.id);
     //尋找之前的資料
