@@ -17,7 +17,6 @@ import { BsDiscord } from "react-icons/bs";
 import CloseIcon from "@mui/icons-material/Close";
 import Avatar from "@mui/material/Avatar";
 import Link from "@mui/material/Link";
-import LightModeIcon from "@mui/icons-material/LightMode";
 import { User } from "@nextui-org/react";
 import {
   Modal,
@@ -28,6 +27,9 @@ import {
   Text,
   Flex,
 } from "@nextui-org/react";
+import MuiLink from "@mui/material/Link";
+import {SiKofi} from 'react-icons/si'
+
 const drawerWidth = 270;
 
 export default function AppHeaderBar({ children }) {
@@ -68,7 +70,11 @@ export default function AppHeaderBar({ children }) {
       <CssBaseline />
       <AppBar
         position="fixed"
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{
+          background: '#212121',
+          boxShadow: "none",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
       >
         <Toolbar sx={{ display: "flex" }}>
           <Link href="/" underline="none">
@@ -87,23 +93,37 @@ export default function AppHeaderBar({ children }) {
             component="div"
             sx={{ flexGrow: 1, paddingLeft: "10px" }}
           >
-            MHCAT
+            <strong>MHCAT</strong>
           </Typography>
 
           <Stack direction="row" spacing={1}>
-            <Box sx={{ border: "3px solid", borderRadius: "10px" }}>
-              <IconButton aria-label="delete">
-                <LightModeIcon />
+          <Link href="https://discord.gg/7g7VE2Sqna" target="_blank">
+          <MuiLink>
+            <Box sx={{ border: "1px solid #c7c7c7", borderRadius: "10px",backgroundColor: "#5765f2"}}>
+              <IconButton disableFocusRipple disableRipple aria-label="delete" >
+                <BsDiscord />
               </IconButton>
             </Box>
-
+            </MuiLink>
+        </Link>
+        <Link href="https://ko-fi.com/night_cat" target="_blank">
+          <MuiLink>
+            <Box sx={{ border: "2px solid #c7c7c7", borderRadius: "10px",}}>
+              <IconButton disableFocusRipple disableRipple aria-label="delete" >
+                <SiKofi />
+              </IconButton>
+            </Box>
+            </MuiLink>
+        </Link>
             <Box>
               <IconButton
+                disableFocusRipple
+                disableRipple
                 onClick={handleClose}
                 sx={{
                   textAlign: "right",
-                  width: '40px',
-                  height: '40px',
+                  width: "40px",
+                  height: "40px",
                   display: { xs: "block", lg: "none" },
                 }}
               >
@@ -125,12 +145,12 @@ export default function AppHeaderBar({ children }) {
           [`& .MuiDrawer-paper`]: {
             width: drawerWidth,
             boxSizing: "border-box",
+            background: '#212121',
           },
         }}
       >
         <Toolbar />
-        <Box sx={{ overflow: "auto" }}>
-        </Box>
+        <Box sx={{ overflow: "auto" }}></Box>
 
         <SiderbarInfo />
       </Drawer>

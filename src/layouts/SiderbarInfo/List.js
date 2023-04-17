@@ -9,53 +9,96 @@ import { IoMdAdd } from "react-icons/io";
 import { BsFillCaretDownFill } from "react-icons/bs";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { styled, ThemeProvider, createTheme } from "@mui/material/styles";
+import MuiLink from "@mui/material/Link";
+import { BsFillDoorOpenFill } from "react-icons/bs";
+
+const FireNav = styled(List)({
+  "& 	.MuiLink-root": {
+    textDecoration: "none",
+  },
+  "& .MuiDivider-root": {
+    marginTop: "5px",
+    marginBottom: "5px",
+  },
+  "& .MuiListItemButton-root": {
+    borderRadius: 10,
+    marginRight: "10px",
+    marginLeft: "10px",
+    color: '#c7c7c7'
+  },
+  "& .MuiListItemIcon-root": {
+    border: "2px solid #595959",
+    borderRadius: 10,
+    padding: 7,
+    minWidth: 0,
+    marginRight: "10px",
+    marginLeft: "10px",
+    fontSize: 15,
+  },
+  "& .MuiListItemIcon-root:hover": {
+    border: "2px solid #595959",
+    borderRadius: 10,
+  },
+  "& .MuiListItemButton-root:hover": {
+    borderRadius: 10,
+    marginRight: "10px",
+    fontSize: 1,
+    marginLeft: "10px",
+  },
+  "& .MuiListItemButton-root:focus": {
+    borderRadius: 10,
+    marginRight: "10px",
+    fontSize: 1,
+    marginLeft: "10px",
+  },
+});
 
 export default function SiderBarList() {
   const router = useRouter();
+  const isActive = (href) => router.pathname === href;
   return (
     <>
-      <List>
+      <FireNav component="nav" disablePadding>
         <Link href="/">
-          <ListItem disablePadding>
-            <ListItemButton>
+          <MuiLink>
+            <ListItemButton sx={{ marginTop: "5px",backgroundColor: isActive(`/`) ? '#363636' : 'transparent' }}>
               <ListItemIcon>
                 <BsFillCaretDownFill />
               </ListItemIcon>
               <ListItemText primary="請選擇一個伺服器" />
             </ListItemButton>
-          </ListItem>
+          </MuiLink>
         </Link>
-      </List>
-      <Divider />
-      {router.query.id ? (
-        <>
-          <List>
-          <Link href={`/guilds/${router.query.id}/welcome`}>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <BsFillCaretDownFill />
-                </ListItemIcon>
-                <ListItemText primary="歡迎系統" />
-              </ListItemButton>
-            </ListItem>
+        <Divider />
+        {router.query.id ? (
+          <>
+            <Link href={`/guilds/${router.query.id}/welcome`}>
+              <MuiLink>
+                <ListItemButton sx={{backgroundColor: isActive(`/guilds/[id]/welcome`) ? '#363636' : 'transparent'}}>
+                  <ListItemIcon>
+                    <BsFillDoorOpenFill />
+                  </ListItemIcon>
+                  <ListItemText primary="歡迎系統" />
+                </ListItemButton>
+              </MuiLink>
             </Link>
-          </List>
-          <Divider />
-        </>
-      ) : (
-        <></>
-      )}
-      <List>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <IoMdAdd />
-            </ListItemIcon>
-            <ListItemText primary="邀請機器人" />
-          </ListItemButton>
-        </ListItem>
-      </List>
+            <Divider />
+          </>
+        ) : (
+          <></>
+        )}
+        <Link href={`https://discord.com/api/oauth2/authorize?client_id=964185876559196181&permissions=8&scope=applications.commands%20bot`}target="_blank">
+              <MuiLink>
+        <ListItemButton>
+          <ListItemIcon>
+            <IoMdAdd />
+          </ListItemIcon>
+          <ListItemText primary="邀請機器人" />
+        </ListItemButton>
+        </MuiLink>
+        </Link>
+      </FireNav>
     </>
   );
 }

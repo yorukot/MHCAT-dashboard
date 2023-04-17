@@ -43,7 +43,6 @@ import { TbMessage } from "react-icons/tb";
 import { BiUserPlus } from "react-icons/bi";
 import GetRedisUserGuilds from "../../../util/redis/GetRedisUserGuilds";
 import GetRedisGuild from "../../../util/redis/GetRedisGuild";
-import { JoinMessage } from "../../../util/schemas";
 import { FiCheck } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
 import { validateHTMLColorHex } from "validate-color";
@@ -52,7 +51,8 @@ import { SaveWelcomeData } from "../../../util/saveData.js/SaveWelcomeData";
 import isImageURL from "is-image-url";
 import { GetWelcomeData } from "../../../util/fetchapi/MongodbData/getWelcomeData";
 import CircularProgress from "@mui/material/CircularProgress";
-import Snackbar from '@mui/material/Snackbar';
+import Snackbar from "@mui/material/Snackbar";
+import Slide from "@mui/material/Slide";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -68,6 +68,7 @@ export default function GuildsPage(guildData) {
   const [JoinMessage, setJoinMessage] = useState();
   const [channels, setChannels] = useState();
   useEffect(() => {
+    if(["404","403","401"].includes(guildData.status)) return
     const fetchData = async () => {
       const guildsData = await GetWelcomeData(
         session.id,
@@ -80,8 +81,9 @@ export default function GuildsPage(guildData) {
       fetchData();
     }
   }, [session]);
-  const roles = guildData.guild.roles;
+  const roles = guildData?.guild?.roles;
   useEffect(() => {
+    if(["404","403","401"].includes(guildData.status)) return
     const channels_array = [];
     guildData.guild.channels.map((data) => {
       if (data.type === 4) {
@@ -103,10 +105,10 @@ export default function GuildsPage(guildData) {
       }
     });
     setChannels(channels_array);
-    setColor(validateHTMLColorHex(JoinMessage?.color) || `#fff`);
+    setColor(validateHTMLColorHex(JoinMessage?.color) ? JoinMessage.color : `#fff`);
     setenableWelcome(JoinMessage?.enable || false);
     setRandom(!validateHTMLColorHex(JoinMessage?.color));
-    setImgUrl(JoinMessage?.img);
+    setImgUrl(JoinMessage?.img ? JoinMessage.img : '');
     setChannel(channels_array.find((obj) => obj.id === JoinMessage?.channel));
     setWelcomeContent(
       `${JoinMessage?.message_content || "歡迎{tag}加入我們!"}`
@@ -123,15 +125,14 @@ export default function GuildsPage(guildData) {
   const [WelcomeContent, setWelcomeContent] = useState();
   const [SuccessSaveData, setSuccessSaveData] = useState();
   useEffect(() => {
-    if (!Channel?.id ? true : false) return setChangeWelcomeData(false);
+    if (!Channel?.id ? true : false || ImgUrl?.length > 0 ? !isImageURL(ImgUrl) : false) return setChangeWelcomeData(false);
     if (
-      Channel?.id !==
-        channels?.find((obj) => obj.id === JoinMessage?.channel)?.id ||
-      Random !== !validateHTMLColorHex(JoinMessage?.color) ||
+      Channel?.id !== (channels?.find((obj) => obj.id === JoinMessage?.channel)?.id) ||
+      Random !== (!validateHTMLColorHex(JoinMessage?.color)) ||
       enableWelcome !== (JoinMessage?.enable || false) ||
-      color !== (validateHTMLColorHex(JoinMessage?.color) || `#fff`) ||
-      WelcomeContent !== `${JoinMessage?.message_content || "歡迎{tag}加入我們!"}` ||
-      ImgUrl !== JoinMessage?.img
+      color !== (validateHTMLColorHex(JoinMessage?.color) ? JoinMessage.color : `#fff`) ||
+      WelcomeContent !== (`${JoinMessage?.message_content || "歡迎{tag}加入我們!"}`) ||
+      ImgUrl !== (JoinMessage?.img ? JoinMessage.img : '')
     ) {
       setChangeWelcomeData(true);
     } else {
@@ -141,7 +142,7 @@ export default function GuildsPage(guildData) {
   const defChannel =
     channels?.find((obj) => obj.id === JoinMessage?.channel) || null;
   function saveWelcomeData() {
-    setWelcomeSaveingData(true)
+    setWelcomeSaveingData(true);
     const data = {
       guild: router.query.id,
       enable: enableWelcome,
@@ -157,19 +158,24 @@ export default function GuildsPage(guildData) {
         router.query.id,
         data
       );
-        setJoinMessage(guildsData)
-        setWelcomeSaveingData(false)
-        setSuccessSaveData(true)
-        setTimeout(() => {
-          setSuccessSaveData(false)
-        }, 2000);
+      setJoinMessage(guildsData);
+      setWelcomeSaveingData(false);
+      setSuccessSaveData(true);
+      setTimeout(() => {
+        setSuccessSaveData(false);
+      }, 2000);
     };
-    fetchData()
+    fetchData();
   }
   return (
     <>
-          <Snackbar open={SuccessSaveData} autoHideDuration={2000} sx={{ width: '100%' }}>
-        <Alert severity="success" sx={{ width: '100%' }}>
+      <Snackbar
+        open={SuccessSaveData}
+        autoHideDuration={2000}
+        sx={{ width: "95%" }}
+        TransitionComponent={TransitionUp}
+      >
+        <Alert variant="filled" severity="success" sx={{ width: "100%" }}>
           成功儲存設定!
         </Alert>
       </Snackbar>
@@ -258,7 +264,7 @@ export default function GuildsPage(guildData) {
                     multiline
                     rows={5}
                   />
-                  <Alert severity="info">
+                  <Alert variant="outlined" severity="info">
                     <AlertTitle>資訊</AlertTitle>
                     TAG使用者可以使用 <strong>{"{tag}"}</strong>
                     <br />
@@ -309,13 +315,19 @@ export default function GuildsPage(guildData) {
                   </Stack>
                   <Divider />
                   <Button
-                    disabled={WelcomeSaveingData === true ? true : !changeWelcomeData}
+                    disabled={
+                      WelcomeSaveingData === true ? true : !changeWelcomeData
+                    }
                     color="primary"
                     auto
                     css={{ width: "100px" }}
                     onPress={() => saveWelcomeData()}
                   >
-                    {WelcomeSaveingData ? <CircularProgress size={20}/> : '儲存設定'}
+                    {WelcomeSaveingData ? (
+                      <CircularProgress size={20} />
+                    ) : (
+                      "儲存設定"
+                    )}
                   </Button>
                 </Stack>
               </Collapse>
@@ -375,10 +387,17 @@ export default function GuildsPage(guildData) {
               </Collapse>
             </Stack>
           </Box>
+        </>
 
-          {
-            //我只是個不起的分隔線--------------------------------------------------------------------
-          }
+
+      ) : (
+        <Grid
+          container
+          justifyContent="center"
+          alignItems="center"
+          style={{ height: "100vh" }}
+        >
+          <CircularProgress />
           <Modal
             blur
             preventClose
@@ -465,16 +484,8 @@ export default function GuildsPage(guildData) {
               </Link>
             </Modal.Footer>
           </Modal>
-        </>
-      ) : (
-        <Grid
-          container
-          justifyContent="center"
-          alignItems="center"
-          style={{ height: "100vh" }}
-        >
-          <CircularProgress />
         </Grid>
+        
       )}
     </>
   );
@@ -501,20 +512,9 @@ export async function getServerSideProps(ctx) {
   if (isFound) {
     const GuildData = await GetRedisGuild(session.id, query.id);
     //尋找之前的資料
-    const { message_content, color, channel, img, enable } =
-      await JoinMessage.findOne({
-        guild: query.id,
-      });
     return {
       props: {
         status: `${GuildData.status === "404" ? "404" : "200"}`,
-        JoinMessage: {
-          message_content: message_content || null,
-          color: color || null,
-          channel: channel || null,
-          img: img || null,
-          enable: enable || null,
-        },
         guild: GuildData.GuildData,
       },
     };
@@ -525,4 +525,8 @@ export async function getServerSideProps(ctx) {
       },
     };
   }
+}
+
+function TransitionUp(props) {
+  return <Slide {...props} direction="up" />;
 }

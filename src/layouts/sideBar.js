@@ -27,11 +27,11 @@ export default function SideBar() {
         variant="permanent"
         sx={{
           width: drawerWidth,
-          flexShrink: 0,
           display: { xs: "none", lg: "block" },
           [`& .MuiDrawer-paper`]: {
             width: drawerWidth,
             boxSizing: "border-box",
+            backgroundColor: 'background.dark',
           },
         }}
       >

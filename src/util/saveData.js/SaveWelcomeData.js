@@ -1,4 +1,5 @@
 import axios from "axios";
+import {MHCATAPIURL} from '../Data'
 //import { guilds } from "./schemas";
 //import mongoose from "mongoose";
 //import connect from './connectMongodb'
@@ -10,7 +11,7 @@ export async function SaveWelcomeData(userId, UserAccessToken, GuildId, SaveData
     'SaveData': SaveData,
     'GuildId': GuildId,
   };
-  const response = await fetch("http://localhost:3000/api/savedata/saveWelcomeData", {
+  const response = await fetch(MHCATAPIURL + "/api/savedata/saveWelcomeData", {
     method: "POST",
     body: JSON.stringify(requestBody),
     headers: {

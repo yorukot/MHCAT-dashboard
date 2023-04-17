@@ -25,11 +25,10 @@ const JoinMessageSchema = new Schema({
     },
     img: {
         type: SchemaTypes.String,
-        required: true,
     },
 })
 
 
-const JoinMessage = models.JoinMessage || model('JoinMessage', JoinMessageSchema);
+const JoinMessage = models.join_message || model('join_message', JoinMessageSchema);
 
 export default JoinMessage;

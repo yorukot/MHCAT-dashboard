@@ -26,7 +26,7 @@ export default async function getUserGuilds(req, res) {
       { guild: GuildId },
       SaveData,
       { new: true }
-    ) || await userdata.create(SaveData);
+    ) || await JoinMessage.create(SaveData);
     //返回資料
     return res.json(WelcomeNewSaveData || { status: "500" });
   } catch (error) {

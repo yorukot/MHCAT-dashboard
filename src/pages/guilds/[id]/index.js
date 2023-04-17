@@ -26,18 +26,6 @@ const PathData = [
     icon: <BsFillDoorOpenFill />,
     Des: "在你的成員加入你的伺服器時給他一些驚喜吧!",
   },
-  {
-    id: "coin",
-    name: "經濟相關設置",
-    icon: <BsFillDoorOpenFill />,
-    Des: "打造屬於你伺服器自己專屬的經濟帝國吧!",
-  },
-  {
-    id: "lotter",
-    name: "抽獎",
-    icon: <BsFillDoorOpenFill />,
-    Des: "讓你的伺服器有一些有趣的東西讓使用者可以玩玩",
-  },
 ];
 
 export default function GuildsPage(data) {
@@ -63,7 +51,7 @@ export default function GuildsPage(data) {
           {PathData.map((data) => (
             <>
               <Grid xs={2} sm={3} md={4} lg={4} key={data.id}>
-                <Card isHoverable css={{ position: "relative" }}>
+                <Card isHoverable css={{ position: "relative",height: '200px'}}>
                   <Card.Header>
                     <Box sx={{ border: "2px solid", borderRadius: "10px" }}>
                       <IconButton

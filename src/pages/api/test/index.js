@@ -1,5 +1,3 @@
-import connectMongodb from "../../../util/connectMongodb";
-import Test from "../../../util/schemas/test";
 
 /**
  *
@@ -8,14 +6,8 @@ import Test from "../../../util/schemas/test";
  */
 
 export default async function addTest(req, res) {
-    try {
-
-        await connectMongodb();
-      
-        console.log(req.body);
-        const test = await Test.create(JSON.parse(req.body));
-      
-        res.json({ test });
+    try {            
+        res.json({ code: '1' });
     } catch (error) {
         res.json({error})
     }

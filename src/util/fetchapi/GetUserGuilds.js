@@ -1,4 +1,5 @@
 import axios from "axios";
+import {MHCATAPIURL} from '../Data'
 //import { guilds } from "./schemas";
 //import mongoose from "mongoose";
 //import connect from './connectMongodb'
@@ -7,7 +8,7 @@ export async function GetUserGuilds(userId) {
   const requestBody = {
     'userid': userId
   };
-  const response = await fetch("http://localhost:3000/api/discord/getusreguilds", {
+  const response = await fetch(MHCATAPIURL + "/api/discord/getusreguilds", {
     method: "POST",
     body: JSON.stringify(requestBody),
     headers: {

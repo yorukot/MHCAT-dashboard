@@ -15,27 +15,46 @@ const myDarkTheme = createTheme({
   type: "dark",
   theme: {
     colors: {
-      background: "#1d1d1d",
+      // brand colors
+      primary: '#14bdff',
+
+      gradient: 'linear-gradient(112deg, $blue100 -25%, $pink500 -10%, $purple500 80%)',
+      link: '#5E1DAD',
+
+      // you can also create your own color
+      myColor: '#ff4ecd'
+
+      // ...  more colors
     },
-    space: {},
-    fonts: {},
   },
 });
 
 const darkTheme = createMuiTheme({
   palette: {
     mode: "dark",
+    background: {
+      default: '#242426',
+      paper:'#242426',
+      dark: '#212121'
+    },
     primary: {
-      main: "#3f51b5",
+      main: "#14bdff",
+      dark: '#14bdff'
+    },
+    action: {
+      focus: '#000000'
     },
     secondary: {
       main: "#f50057",
     },
     text: {
-      primary: "#d0d0d0",
+      primary: "#c7c7c7",
     },
-    divider: "#3b3b3b",
+    divider: "rgba(255, 255, 255, 0.12)",
   },
+   shape: {
+    borderRadius: 10
+   }
 });
 
 export default function App({
