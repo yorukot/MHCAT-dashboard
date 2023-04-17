@@ -512,7 +512,7 @@ export async function getServerSideProps(ctx) {
   if (isFound) {
     const GuildData = await GetRedisGuild(session.id, query.id);
     //尋找之前的資料
-    return {
+    return { 
       props: {
         status: `${GuildData.status === "404" ? "404" : "200"}`,
         guild: GuildData.GuildData,
