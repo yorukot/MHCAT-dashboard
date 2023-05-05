@@ -72,7 +72,6 @@ export default function App({
             </Head>
             <SessionProvider session={session}>
               <div>
-                Hello World!
                 <style global jsx>{`
                   html,
                   body,

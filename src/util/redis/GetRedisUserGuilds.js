@@ -1,9 +1,9 @@
-import redis from "./connectRedis";
+import redis from "../connect/connectRedis";
 import { GetUserGuilds } from "../fetchapi/GetUserGuilds";
 import { DISCORD_API_URL } from "../Data";
 import { guilds, userdata } from "../schemas";
 import axios from "axios";
-import connectMongo from "../connectMongodb";
+import connectMongo from "../connect/connectMongodb";
 import mongoose from "mongoose";
 
 async function GetRedisUserGuilds(sessionId) {

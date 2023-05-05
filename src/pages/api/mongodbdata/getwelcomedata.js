@@ -1,7 +1,7 @@
 import { DISCORD_API_URL } from "../../../util/Data";
 import { JoinMessage, userdata } from "../../../util/schemas";
 import axios from "axios";
-import connectMongo from "../../../util/connectMongodb";
+import connectMongo from "../../../util/connect/connectMongodb";
 import mongoose from "mongoose";
 
 /**
@@ -23,13 +23,15 @@ export default async function getUserGuilds(req, res) {
     //從mongodb取得accessToken
     const { accessToken } = await userdata.findOne({ id: userid });
     //如果找不到
-    if (!accessToken || accessToken !== UserAccessToken) return res.json({ status: "403" });
+    if (!accessToken || accessToken !== UserAccessToken) return res.status(403).json({ message: 'You do not have permission to access this data' });
+
     //請求成員伺服器
     const GuildData = await JoinMessage.findOne({ guild: GuildId });
     //返回資料
-    return res.json(GuildData || {status: '404'});
+    if(!WelcomeNewSaveData) return res.status(404).json({ message: 'Could not find the data'})
+    return res.status(200).json(GuildData);
   } catch (error) {
     console.log(error);
-    res.json({ status: "500" });
+    res.status(500).json({ message: 'An unexpected error occurred' });
   }
 }

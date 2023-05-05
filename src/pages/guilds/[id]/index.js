@@ -19,12 +19,20 @@ import { GetGuild } from "../../../util/fetchapi/GetGuild";
 import { BsFillDoorOpenFill } from "react-icons/bs";
 import GetRedisUserGuilds from "../../../util/redis/GetRedisUserGuilds";
 import GetRedisGuild from "../../../util/redis/GetRedisGuild";
+import {MdWork} from 'react-icons/md'
+
 const PathData = [
   {
     id: "welcome",
     name: "歡迎系統",
     icon: <BsFillDoorOpenFill />,
     Des: "在你的成員加入你的伺服器時給他一些驚喜吧!",
+  },
+  {
+    id: "work",
+    name: "打工系統",
+    icon: <MdWork />,
+    Des: "獨特的打工系統，讓你可以簡單的使用打工系統來讓你的伺服器獲得更多的趣味性!",
   },
 ];
 
@@ -51,7 +59,10 @@ export default function GuildsPage(data) {
           {PathData.map((data) => (
             <>
               <Grid xs={2} sm={3} md={4} lg={4} key={data.id}>
-                <Card isHoverable css={{ position: "relative",height: '200px'}}>
+                <Card
+                  isHoverable
+                  css={{ position: "relative", height: "200px" }}
+                >
                   <Card.Header>
                     <Box sx={{ border: "2px solid", borderRadius: "10px" }}>
                       <IconButton

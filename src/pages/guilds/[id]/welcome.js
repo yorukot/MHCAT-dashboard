@@ -47,7 +47,7 @@ import { FiCheck } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
 import { validateHTMLColorHex } from "validate-color";
 import { Divider } from "@nextui-org/react";
-import { SaveWelcomeData } from "../../../util/saveData.js/SaveWelcomeData";
+import { SaveWelcomeData } from "../../../util/saveData.js/WelcomeData/SaveWelcomeData";
 import isImageURL from "is-image-url";
 import { GetWelcomeData } from "../../../util/fetchapi/MongodbData/getWelcomeData";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -105,7 +105,7 @@ export default function GuildsPage(guildData) {
       }
     });
     setChannels(channels_array);
-    setColor(validateHTMLColorHex(JoinMessage?.color) ? JoinMessage.color : `#fff`);
+    setColor(validateHTMLColorHex(JoinMessage?.color) ? JoinMessage.color : `#ffffff`);
     setenableWelcome(JoinMessage?.enable || false);
     setRandom(!validateHTMLColorHex(JoinMessage?.color));
     setImgUrl(JoinMessage?.img ? JoinMessage.img : '');
@@ -130,7 +130,7 @@ export default function GuildsPage(guildData) {
       Channel?.id !== (channels?.find((obj) => obj.id === JoinMessage?.channel)?.id) ||
       Random !== (!validateHTMLColorHex(JoinMessage?.color)) ||
       enableWelcome !== (JoinMessage?.enable || false) ||
-      color !== (validateHTMLColorHex(JoinMessage?.color) ? JoinMessage.color : `#fff`) ||
+      color !== (validateHTMLColorHex(JoinMessage?.color) ? JoinMessage.color : `#ffffff`) ||
       WelcomeContent !== (`${JoinMessage?.message_content || "歡迎{tag}加入我們!"}`) ||
       ImgUrl !== (JoinMessage?.img ? JoinMessage.img : '')
     ) {
@@ -151,7 +151,7 @@ export default function GuildsPage(guildData) {
       channel: Channel.id,
       img: ImgUrl?.length > 0 ? ImgUrl : null,
     };
-    const fetchData = async () => {
+    const SaveData = async () => {
       const guildsData = await SaveWelcomeData(
         session.id,
         session.accessToken,
@@ -165,7 +165,7 @@ export default function GuildsPage(guildData) {
         setSuccessSaveData(false);
       }, 2000);
     };
-    fetchData();
+    SaveData();
   }
   return (
     <>
@@ -304,7 +304,7 @@ export default function GuildsPage(guildData) {
                             backgroundColor: `${color}`,
                             width: "30px",
                             height: "30px",
-                            border: "3px solid #fff",
+                            border: "3px solid #ffffff",
                           }}
                         />
                       </Popover.Trigger>

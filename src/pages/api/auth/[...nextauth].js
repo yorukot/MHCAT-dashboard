@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 import { userdata } from "../../../util/schemas/index";
-import connectMongo from '../../../util/connectMongodb'
+import connectMongo from '../../../util/connect/connectMongodb'
 import mongoose from "mongoose";
 
 //添加意圖
@@ -59,4 +59,7 @@ export default NextAuth({
     },
   },
   secret: process.env.JWT_SECRET,
+  session: {
+    maxAge: 2 * 24 * 60 * 60
+  }
 });

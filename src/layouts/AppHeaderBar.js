@@ -151,7 +151,6 @@ export default function AppHeaderBar({ children }) {
       >
         <Toolbar />
         <Box sx={{ overflow: "auto" }}></Box>
-
         <SiderbarInfo />
       </Drawer>
       <SideBar />

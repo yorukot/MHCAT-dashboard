@@ -1,7 +1,7 @@
 import { DISCORD_API_URL } from "../../../util/Data";
-import { userdata, guildData } from "../../../util/schemas";
+import { userdata } from "../../../util/schemas";
 import axios from "axios";
-import connectMongo from "../../../util/connectMongodb";
+import connectMongo from "../../../util/connect/connectMongodb";
 import mongoose from "mongoose";
 
 /**

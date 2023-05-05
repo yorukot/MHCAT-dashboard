@@ -1,7 +1,7 @@
-import { DISCORD_API_URL } from "../../../util/Data";
-import { JoinMessage, userdata } from "../../../util/schemas";
+import { DISCORD_API_URL } from "../../../../util/Data";
+import { JoinMessage, userdata } from "../../../../util/schemas";
 import axios from "axios";
-import connectMongo from "../../../util/connectMongodb";
+import connectMongo from "../../../../util/connect/connectMongodb";
 import mongoose from "mongoose";
 
 /**
@@ -10,7 +10,7 @@ import mongoose from "mongoose";
  * @param { import('next').NextApiResponse } res
  */
 
-export default async function getUserGuilds(req, res) {
+export default async function API_SaveWelcomeData(req, res) {
   try {
     //如果沒連結到mongodb就連結
     if (mongoose.connection.readyState === 0) await connectMongo();
@@ -20,7 +20,7 @@ export default async function getUserGuilds(req, res) {
     const { accessToken } = await userdata.findOne({ id: userid });
     //如果找不到
     if (!accessToken || accessToken !== UserAccessToken)
-      return res.json({ status: "403" });
+    return res.status(403).json({ message: 'You do not have permission to access this data' });
     //請求成員伺服器
     const WelcomeNewSaveData = await JoinMessage.findOneAndUpdate(
       { guild: GuildId },
@@ -28,9 +28,10 @@ export default async function getUserGuilds(req, res) {
       { new: true }
     ) || await JoinMessage.create(SaveData);
     //返回資料
-    return res.json(WelcomeNewSaveData || { status: "500" });
+    if(!WelcomeNewSaveData) return res.status(500).json({ message: 'An unknown error occurred while processing the data'})
+    return res.status(200).json(WelcomeNewSaveData);
   } catch (error) {
     console.log(error);
-    res.json({ status: "500" });
+    res.status(500).json({ message: 'An unexpected error occurred' });
   }
 }

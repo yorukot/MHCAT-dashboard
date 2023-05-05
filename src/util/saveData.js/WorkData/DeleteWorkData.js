@@ -1,17 +1,17 @@
 import axios from "axios";
-import {MHCATAPIURL} from '../Data'
+import {MHCATAPIURL} from '../../Data'
 //import { guilds } from "./schemas";
 //import mongoose from "mongoose";
 //import connect from './connectMongodb'
 
-export async function SaveWelcomeData(userId, UserAccessToken, GuildId, SaveData) {
+export async function DeleteWorkData(userId, UserAccessToken, GuildId, OldDataName) {
   const requestBody = {
     'userid': userId,
     'UserAccessToken': UserAccessToken,
-    'SaveData': SaveData,
     'GuildId': GuildId,
+    'OldDataName': OldDataName
   };
-  const response = await fetch(MHCATAPIURL + "/api/savedata/saveWelcomeData", {
+  const response = await fetch(MHCATAPIURL + "/api/savedata/workdata/deleteworkData", {
     method: "POST",
     body: JSON.stringify(requestBody),
     headers: {
