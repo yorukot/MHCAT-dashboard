@@ -55,6 +55,7 @@ import Snackbar from '@mui/material/Snackbar';
 import Slide from '@mui/material/Slide';
 import { GetVoiceData } from '../../../util/fetchapi/MongodbData/getVoiceData';
 import { SaveVoiceDetectionData } from '../../../util/saveData.js/VoiceData/SaveVoiceDetectionData';
+import {MdKeyboardVoice} from 'react-icons/md'
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -176,19 +177,19 @@ export default function GuildsPage(guildData) {
               }}
               weight="bold"
             >
-              歡迎&離開系統
+              語音系統
             </Text>
             <Stack spacing={2}>
               {/*歡迎訊息*/}
 
               <Collapse
                 shadow
-                title="發送歡迎訊息"
-                subtitle="為加入你伺服器的使用者發送一個有趣的歡迎消息吧!"
+                title="自動傳送語音頻道連結"
+                subtitle="當有人在某個頻道發送一個訊息時，我會自動幫他發送他目前所在語音頻道的連結喔!!"
                 contentLeft={
                   <Avatar
                     size="lg"
-                    icon={<TbMessage size={25}></TbMessage>}
+                    icon={<MdKeyboardVoice size={25}></MdKeyboardVoice>}
                     bordered
                     squared
                   />

@@ -21,6 +21,7 @@ import GetRedisUserGuilds from '../../../util/redis/GetRedisUserGuilds';
 import GetRedisGuild from '../../../util/redis/GetRedisGuild';
 import { MdWork } from 'react-icons/md';
 import { AiFillWarning } from 'react-icons/ai';
+import {MdKeyboardVoice} from 'react-icons/md'
 
 const PathData = [
   {
@@ -34,6 +35,12 @@ const PathData = [
     name: '打工系統',
     icon: <MdWork />,
     Des: '獨特的打工系統，讓你可以簡單的使用打工系統來讓你的伺服器獲得更多的趣味性!',
+  },
+  {
+    id: 'voice',
+    name: '語音系統',
+    icon: <MdKeyboardVoice />,
+    Des: '當你某個人違反伺服器規則時，你可你會需要紀錄，這個功能能夠很好的幫助你紀錄，還譨自動刪除'
   },
   {
     id: 'warn',

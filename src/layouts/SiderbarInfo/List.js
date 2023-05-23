@@ -14,7 +14,7 @@ import MuiLink from "@mui/material/Link";
 import { BsFillDoorOpenFill } from "react-icons/bs";
 import {MdWork} from 'react-icons/md'
 import { AiFillWarning } from 'react-icons/ai';
-
+import {MdKeyboardVoice} from 'react-icons/md'
 const FireNav = styled(List)({
   "& 	.MuiLink-root": {
     textDecoration: "none",
@@ -92,6 +92,16 @@ export default function SiderBarList() {
                     <MdWork />
                   </ListItemIcon>
                   <ListItemText primary="抽獎系統" />
+                </ListItemButton>
+              </MuiLink>
+            </Link>
+            <Link href={`/guilds/${router.query.id}/voice`}>
+              <MuiLink>
+                <ListItemButton sx={{backgroundColor: isActive(`/guilds/[id]/voice`) ? '#363636' : 'transparent'}}>
+                <ListItemIcon>
+                    <MdKeyboardVoice />
+                  </ListItemIcon>
+                  <ListItemText primary="語音系統" />
                 </ListItemButton>
               </MuiLink>
             </Link>
