@@ -23,7 +23,7 @@ async function GetRedisGuild(sessionId, GuildId) {
         `AI/GuildData/${GuildId}`,
         JSON.stringify(GuildData),
         "EX",
-        1 * 1,
+        60 * 4,
         (err) => {
           if (err) {
             console.log(err);

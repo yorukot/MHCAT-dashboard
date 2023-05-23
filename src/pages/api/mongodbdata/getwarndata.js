@@ -1,5 +1,5 @@
 import { DISCORD_API_URL } from "../../../util/Data";
-import { JoinMessage, userdata } from "../../../util/schemas";
+import { warndb, userdata } from "../../../util/schemas";
 import axios from "axios";
 import connectMongo from "../../../util/connect/connectMongodb";
 import mongoose from "mongoose";
@@ -14,7 +14,7 @@ function getUserAdminGuilds(data) {
   return data.filter(({ permissions }) => (Number(permissions) & 0x8) === 0x8);
 }
 
-export default async function getUserGuilds(req, res) {
+export default async function getWarnData(req, res) {
   try {
     //如果沒連結到mongodb就連結
     if (mongoose.connection.readyState === 0) await connectMongo();
@@ -26,7 +26,7 @@ export default async function getUserGuilds(req, res) {
     if (!accessToken || accessToken !== UserAccessToken) return res.status(403).json({ message: 'You do not have permission to access this data' });
 
     //請求成員伺服器
-    const GuildData = await JoinMessage.findOne({ guild: GuildId });
+    const GuildData = await warndb.find({ guild: GuildId });
     //返回資料
     if(!GuildData) return res.status(404).json({ message: 'Could not find the data'})
     return res.status(200).json(GuildData);

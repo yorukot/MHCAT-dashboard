@@ -372,7 +372,7 @@ export default function GuildsPage(guildData) {
                     helperText={`${Time <= 0 ? "必須大於0!" : ""}`}
                     id="EditDataTime"
                     bordered
-                    labelRight="Hr"
+                    labelRight="Sec"
                     color="primary"
                     type="number"
                     initialValue={ModalData?.data?.time}
