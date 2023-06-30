@@ -25,7 +25,6 @@ MONGO_URI=
 JWT_SECRET=
 (Redis的URL)
 REDIS_URL=
-(sentry的錯誤回報機率)
 ```
 
 確認都輸入完成之後
