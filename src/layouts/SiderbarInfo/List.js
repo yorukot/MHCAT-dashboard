@@ -91,7 +91,7 @@ export default function SiderBarList() {
                 <ListItemIcon>
                     <MdWork />
                   </ListItemIcon>
-                  <ListItemText primary="抽獎系統" />
+                  <ListItemText primary="打工系統" />
                 </ListItemButton>
               </MuiLink>
             </Link>
