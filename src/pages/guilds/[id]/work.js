@@ -364,7 +364,7 @@ export default function GuildsPage(guildData) {
                     initialValue={ModalData?.data?.name}
                   />
                   <Text h5 weight="bold">
-                    打工所需時間(單位:小時)
+                    打工所需時間(單位:秒鐘)
                   </Text>
                   <Input
                     onChange={(e) => setTime(e.target.value)}

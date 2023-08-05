@@ -1,3 +1,36 @@
 {
-  "extends": "next/core-web-vitals"
+  "env": {
+      "browser": true,
+      "es2021": true
+  },
+  "extends": [
+      "plugin:react/recommended",
+      "airbnb",
+      "plugin:@next/next/recommended",
+      "prettier"
+  ],
+  "parserOptions": {
+      "ecmaFeatures": {
+          "jsx": true
+      },
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+  },
+  "plugins": [
+      "react",
+      "prettier",
+      "testing-library"
+  ],
+  "rules": {
+      "prettier/prettier": [
+          "error" 
+        ],
+      "react/react-in-jsx-scope": "off",
+      "react/prop-types": "off",
+      "react/jsx-props-no-spreading": "off",
+      "no-undef": "off",
+      "import/no-unresolved": "off",
+      "import/extensions": "off",
+      "jsx-a11y/anchor-is-valid": "off"
+  }
 }
