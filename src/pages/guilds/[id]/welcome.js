@@ -332,7 +332,7 @@ export default function GuildsPage(guildData) {
                 </Stack>
               </Collapse>
 
-              <Collapse
+              {/*<Collapse
                 shadow
                 title="給予新成員身分組"
                 subtitle="給予一些身分組給剛加進你伺服器的使用者吧!"
@@ -384,7 +384,7 @@ export default function GuildsPage(guildData) {
                     />
                   )}
                 />
-              </Collapse>
+                  </Collapse>*/}
             </Stack>
           </Box>
         </>
