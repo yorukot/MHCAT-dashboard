@@ -42,32 +42,49 @@ async function getGuild(userid, GuildId) {
     //從mongodb取得accessToken
     const { accessToken } = await userdata.findOne({ id: userid });
     //如果沒有accessToken則返回403error
-    if (!accessToken) return res.json({ status: "403" });
+    if (!accessToken) return { status: "403" };
     //找尋資料
     const GuildData = await getGuildService(GuildId);
     //返回資料
     return { status: "200", GuildData: GuildData };
-    //如果已經有資料了
   } catch (error) {
-    //返回404錯誤
-    return { status: "404" };
+    //如果機器人不在伺服器中，返回404錯誤
+    if (error.message === 'BOT_NOT_IN_GUILD') {
+      return { status: "404" };
+    }
+    //其他錯誤返回500
+    console.log('getGuild error:', error);
+    return { status: "500" };
   }
 }
 
 async function getGuildService(id) {
   //取得機器人Token
   const TOKEN = process.env.TOKEN;
-  //取得伺服器Channels
-  const ChannelGet = await axios.get(
-    `${DISCORD_API_URL}/guilds/${id}/channels`,
-    {
+  
+  let GuildGet, ChannelGet;
+  
+  try {
+    //取得伺服器資訊
+    GuildGet = await axios.get(`${DISCORD_API_URL}/guilds/${id}`, {
       headers: { Authorization: `Bot ${TOKEN}` },
+    });
+    //取得伺服器Channels
+    ChannelGet = await axios.get(
+      `${DISCORD_API_URL}/guilds/${id}/channels`,
+      {
+        headers: { Authorization: `Bot ${TOKEN}` },
+      }
+    );
+  } catch (error) {
+    // If the bot is not in the server, Discord API will return 403 or 404
+    if (error.response?.status === 403 || error.response?.status === 404) {
+      throw new Error('BOT_NOT_IN_GUILD');
     }
-  );
-  //取得伺服器資訊
-  const GuildGet = await axios.get(`${DISCORD_API_URL}/guilds/${id}`, {
-    headers: { Authorization: `Bot ${TOKEN}` },
-  });
+    // Re-throw other errors
+    throw error;
+  }
+  
   //設定從Api取得的Data名稱
   const Guild = GuildGet.data;
   const Channel = ChannelGet.data;
