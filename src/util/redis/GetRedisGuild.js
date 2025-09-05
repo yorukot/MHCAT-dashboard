@@ -20,7 +20,7 @@ async function GetRedisGuild(sessionId, GuildId) {
     (await getGuild(sessionId, GuildId).then((GuildData) => {
       if (["403", "500"].includes(GuildData?.status)) return;
       redis.set(
-        `AI/GuildData/${GuildId}`,
+        `API/GuildData/${GuildId}`,
         JSON.stringify(GuildData),
         "EX",
         60 * 4,
