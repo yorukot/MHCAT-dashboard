@@ -67,6 +67,9 @@ export default async function getBackupData(req, res) {
     const { userid, UserAccessToken } = req.body;
     const { id: GuildId } = req.query;
 
+    // debug: 確認 db 名稱
+    console.log('[backup] connection db name:', mongoose.connection.db?.databaseName);
+
     // 驗證使用者身份：確認 accessToken 確實屬於該 userid
     const userData = await userdata.findOne({ id: userid });
     if (!userData?.accessToken || userData.accessToken !== UserAccessToken) {
@@ -92,11 +95,13 @@ export default async function getBackupData(req, res) {
     }
 
     // 並行查詢所有 collection
-    const db = mongoose.connection.db;
+    // useDb() 取得明確指向 mhcat-database 的 connection，
+    // { useCache: true } 確保每次拿到同一個 instance 而不是新建連線
+    const mhcatDb = mongoose.connection.useDb('mhcat-database', { useCache: true }).db;
     const results = await Promise.all(
       GUILD_COLLECTIONS.map(async (col) => {
         try {
-          const docs = await db.collection(col).find({ guild: GuildId }).toArray();
+          const docs = await mhcatDb.collection(col).find({ guild: GuildId }).toArray();
           return [col, docs];
         } catch (e) {
           console.error(`[backup] collection ${col} error:`, e.message);
