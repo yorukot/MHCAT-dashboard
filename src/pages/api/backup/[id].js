@@ -4,50 +4,51 @@ import { userdata } from '../../../util/schemas';
 import axios from 'axios';
 import { DISCORD_API_URL } from '../../../util/Data';
 
-// 所有含有 guild 欄位的 collection 名稱
+// 所有含有 guild 欄位的 collection 名稱（MongoDB 實際名稱，Mongoose 自動複數化）
 const GUILD_COLLECTIONS = [
-  'ann_all_set',
-  'birthday',
-  'birthday_set',
-  'btn',
-  'chat',
-  'chat_role',
-  'chatgpt',
-  'chatgpt_get',
-  'coin',
+  'ann_all_sets',
+  'birthdays',
+  'birthday_sets',
+  'btns',
+  'chats',
+  'chat_roles',
+  'chatgpts',
+  'chatgpt_gets',
+  'coins',
   'create_hours',
-  'cron_set',
-  'errors_set',
-  'ghp',
-  'gift',
-  'gift_change',
-  'good_web',
-  'guild',
-  'join_message',
-  'join_role',
-  'leave_message',
-  'lock_channel',
-  'logging',
-  'lotter',
-  'message_reaction',
-  'Number',
-  'poll',
-  'role_number',
-  'sign_list',
-  'text_xp',
-  'text_xp_channel',
-  'ticket',
-  'verification',
-  'voice_channel',
-  'voice_channel_id',
-  'voice_role',
-  'voice_xp',
-  'voice_xp_channel',
-  'vote',
-  'warndb',
-  'work_set',
-  'work_something',
-  'work_user',
+  'cron_sets',
+  'errors_sets',
+  'ghps',
+  'gifts',
+  'gift_changes',
+  'good_webs',
+  'guilds',
+  'join_messages',
+  'join_roles',
+  'leave_messages',
+  'lock_channels',
+  'loggings',
+  'lotters',
+  'message_reactions',
+  'message_reaction',  // 同時存在單複數兩個 collection
+  'numbers',
+  'polls',
+  'role_numbers',
+  'sign_lists',
+  'text_xps',
+  'text_xp_channels',
+  'tickets',
+  'verifications',
+  'voice_channels',
+  'voice_channel_ids',
+  'voice_roles',
+  'voice_xps',
+  'voice_xp_channels',
+  'votes',
+  'warndbs',
+  'work_sets',
+  'work_somethings',
+  'work_users',
 ];
 
 /**
@@ -91,15 +92,8 @@ export default async function getBackupData(req, res) {
       return res.status(403).json({ message: 'You do not have administrator permission in this guild' });
     }
 
-    // debug: 列出所有 database 和其中的 collections
-    const adminDb = mongoose.connection.db.admin();
-    const { databases } = await adminDb.listDatabases();
-    for (const dbInfo of databases) {
-      const db = mongoose.connection.useDb(dbInfo.name, { useCache: true }).db;
-      const collections = await db.listCollections().toArray();
-      console.log(`[backup] DB: ${dbInfo.name} =>`, collections.map(c => c.name).join(', '));
-    }
-
+    // 並行查詢所有 collection
+    const mhcatDb = mongoose.connection.useDb('mhcat-database', { useCache: true }).db;
     const results = await Promise.all(
       GUILD_COLLECTIONS.map(async (col) => {
         try {
