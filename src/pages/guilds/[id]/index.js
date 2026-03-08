@@ -19,7 +19,7 @@ import { GetGuild } from '../../../util/fetchapi/GetGuild';
 import { BsFillDoorOpenFill } from 'react-icons/bs';
 import GetRedisUserGuilds from '../../../util/redis/GetRedisUserGuilds';
 import GetRedisGuild from '../../../util/redis/GetRedisGuild';
-import { MdWork } from 'react-icons/md';
+import { MdWork, MdDownload } from 'react-icons/md';
 import { AiFillWarning } from 'react-icons/ai';
 import {MdKeyboardVoice} from 'react-icons/md'
 
@@ -47,6 +47,12 @@ const PathData = [
     name: '警告系統',
     icon: <AiFillWarning />,
     Des: '當你某個人違反伺服器規則時，你可你會需要紀錄，這個功能能夠很好的幫助你紀錄，還譨自動刪除'
+  },
+  {
+    id: 'backup',
+    name: '資料備份',
+    icon: <MdDownload />,
+    Des: 'MHCAT 即將停止服務，請在關閉前將你的伺服器資料備份下來！',
   }
 ];
 
