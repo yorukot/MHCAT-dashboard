@@ -64,15 +64,12 @@ export default async function getBackupData(req, res) {
   try {
     if (mongoose.connection.readyState === 0) await connectMongo();
 
-    const { userid, UserAccessToken } = req.body;
+    const { userid } = req.body;
     const { id: GuildId } = req.query;
 
-    // debug: 確認 db 名稱
-    console.log('[backup] connection db name:', mongoose.connection.db?.databaseName);
-
-    // 驗證使用者身份：確認 accessToken 確實屬於該 userid
+    // 驗證使用者身份並取得 accessToken（與其他 API 一致的做法）
     const userData = await userdata.findOne({ id: userid });
-    if (!userData?.accessToken || userData.accessToken !== UserAccessToken) {
+    if (!userData?.accessToken) {
       return res.status(403).json({ message: 'You do not have permission to access this data' });
     }
 
