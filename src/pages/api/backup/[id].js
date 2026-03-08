@@ -92,9 +92,14 @@ export default async function getBackupData(req, res) {
     }
 
     // 並行查詢所有 collection
-    // useDb() 取得明確指向 mhcat-database 的 connection，
-    // { useCache: true } 確保每次拿到同一個 instance 而不是新建連線
     const mhcatDb = mongoose.connection.useDb('mhcat-database', { useCache: true }).db;
+    console.log('[backup] mhcatDb name:', mhcatDb?.databaseName);
+    console.log('[backup] querying guild:', GuildId);
+
+    // 先用一個 collection 測試確認能查到資料
+    const testDocs = await mhcatDb.collection('message_reaction').find({ guild: GuildId }).toArray();
+    console.log('[backup] message_reaction count:', testDocs.length);
+
     const results = await Promise.all(
       GUILD_COLLECTIONS.map(async (col) => {
         try {
