@@ -91,17 +91,13 @@ export default async function getBackupData(req, res) {
       return res.status(403).json({ message: 'You do not have administrator permission in this guild' });
     }
 
-    // 並行查詢所有 collection
-    const mhcatDb = mongoose.connection.useDb('mhcat-database', { useCache: true }).db;
-    const testDb = mongoose.connection.useDb('test', { useCache: true }).db;
-
-    // debug: 掃描兩個 DB，找出這個 guild 的資料在哪
-    for (const col of GUILD_COLLECTIONS) {
-      const inMhcat = await mhcatDb.collection(col).countDocuments({ guild: GuildId });
-      const inTest = await testDb.collection(col).countDocuments({ guild: GuildId });
-      if (inMhcat > 0 || inTest > 0) {
-        console.log(`[backup] ${col}: mhcat-database=${inMhcat}, test=${inTest}`);
-      }
+    // debug: 列出所有 database 和其中的 collections
+    const adminDb = mongoose.connection.db.admin();
+    const { databases } = await adminDb.listDatabases();
+    for (const dbInfo of databases) {
+      const db = mongoose.connection.useDb(dbInfo.name, { useCache: true }).db;
+      const collections = await db.listCollections().toArray();
+      console.log(`[backup] DB: ${dbInfo.name} =>`, collections.map(c => c.name).join(', '));
     }
 
     const results = await Promise.all(
