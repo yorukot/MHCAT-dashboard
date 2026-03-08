@@ -1,4 +1,4 @@
-import connectMongo from '../../../util/connect/connectMongodb';
+import connectMongo, { getDatabase } from '../../../util/connect/connectMongodb';
 import mongoose from 'mongoose';
 import { userdata } from '../../../util/schemas';
 import axios from 'axios';
@@ -91,8 +91,8 @@ export default async function getBackupData(req, res) {
       return res.status(403).json({ message: 'You do not have administrator permission in this guild' });
     }
 
-    // 並行查詢所有 collection，使用 raw collection 避免需要個別 import model
-    const db = mongoose.connection.db;
+    // 並行查詢所有 collection，使用 getDatabase() 確保連到正確的 mhcat-database
+    const db = getDatabase('mhcat-database').db;
     const results = await Promise.all(
       GUILD_COLLECTIONS.map(async (col) => {
         try {
